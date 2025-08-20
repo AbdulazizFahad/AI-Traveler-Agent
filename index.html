@@ -16,63 +16,58 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            min-height: calc(100vh - 40px);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .header p {
             color: #7f8c8d;
-            font-size: 1.2em;
-            margin-bottom: 25px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
         }
 
         .explore-btn {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 15px 35px;
             border-radius: 50px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
         .explore-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
-        }
-
-        .explore-btn:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(238, 90, 36, 0.4);
         }
 
         .explore-btn:disabled {
@@ -86,14 +81,14 @@
             display: none;
             align-items: center;
             justify-content: center;
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #667eea;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -103,119 +98,110 @@
             100% { transform: rotate(360deg); }
         }
 
-        .map-section {
-            text-align: center;
-            margin-bottom: 30px;
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .map-container {
-            width: 600px;
+            width: 100%;
             height: 300px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            margin: 0 auto;
-            position: relative;
         }
 
         #map {
             width: 100%;
             height: 100%;
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         .city-info {
             display: none;
-            margin-top: 40px;
         }
 
         .city-header {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         .city-header h2 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .city-header p {
             opacity: 0.9;
-            font-size: 1.3em;
-            margin-bottom: 15px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
         }
 
         .coordinates {
             font-family: 'Courier New', monospace;
             background: rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 1em;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
             display: inline-block;
         }
 
-        .info-grid {
+        .compact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .info-section {
+        .info-card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #667eea;
             transition: transform 0.3s ease;
         }
 
-        .info-section:hover {
-            transform: translateY(-5px);
+        .info-card:hover {
+            transform: translateY(-3px);
         }
 
-        .info-section h3 {
+        .info-card h3 {
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.4em;
+            gap: 8px;
+            font-size: 1.2em;
             font-weight: 600;
         }
 
-        .stats-section {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .stats-section h3 {
-            color: white;
-            font-size: 1.5em;
-            margin-bottom: 25px;
-        }
-
-        .stats-grid {
+        .stats-mini {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
         .stat-item {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
             transition: transform 0.3s ease;
         }
@@ -225,233 +211,310 @@
         }
 
         .stat-number {
-            font-size: 1.8em;
+            font-size: 1.3em;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .stat-label {
-            font-size: 1em;
+            font-size: 0.85em;
             opacity: 0.9;
         }
 
         .fact-item {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-            font-size: 1em;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+            font-size: 0.95em;
             transition: transform 0.2s ease;
         }
 
         .fact-item:hover {
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
 
-        .weather-info {
+        .weather-mini {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .weather-item {
             background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
         .weather-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .weather-item h4 {
-            font-size: 0.9em;
+            font-size: 0.8em;
             opacity: 0.8;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .weather-item p {
-            font-size: 1.6em;
+            font-size: 1.2em;
             font-weight: 700;
         }
 
-        .route-section {
-            background: linear-gradient(135deg, #00b894, #00a085);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 30px;
+        /* Chat Panel Styles */
+        .chat-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .route-section h3 {
-            margin-bottom: 20px;
+        .chat-header {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.5em;
+            gap: 10px;
+            font-size: 1.1em;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.user {
+            margin-left: auto;
+        }
+
+        .message.ai {
+            margin-right: auto;
+        }
+
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .message.ai .message-content {
+            background: white;
+            color: #2c3e50;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input-container {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 16px;
+            font-size: 0.95em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .send-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            border-bottom-left-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            max-width: 85%;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #bbb;
+            animation: typingAnimation 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .suggestions-row {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .suggestions-row h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3em;
             color: white;
         }
 
-        .route-item {
+        .suggestion-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .suggestion-item {
             background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            font-size: 1.1em;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.95em;
             transition: transform 0.2s ease;
         }
 
-        .route-item:hover {
-            transform: translateX(5px);
-        }
-
-        .prompt-section {
-            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 30px;
-        }
-
-        .prompt-section h3 {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5em;
-            color: white;
-        }
-
-        .prompt-container {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .prompt-header {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .prompt-title {
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .copy-btn.copied {
-            background: #00b894;
-        }
-
-        .prompt-content {
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.1);
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            border-radius: 0 0 15px 15px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .prompt-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 5px;
-        }
-
-        .prompt-tab {
-            flex: 1;
-            padding: 12px 15px;
-            background: transparent;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            font-weight: 500;
-        }
-
-        .prompt-tab.active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .prompt-tab:hover {
-            background: rgba(255, 255, 255, 0.15);
+        .suggestion-item:hover {
+            transform: translateX(3px);
         }
 
         .error-message {
             background: #ff7675;
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 30px 0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
             text-align: center;
             display: none;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        /* Custom scrollbar for prompt content */
-        .prompt-content::-webkit-scrollbar {
+        /* Custom scrollbar */
+        .chat-messages::-webkit-scrollbar {
             width: 6px;
         }
 
-        .prompt-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
             border-radius: 3px;
         }
 
-        .prompt-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
         }
 
         /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .chat-panel {
+                height: 500px;
+            }
+            
+            .compact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -462,67 +525,25 @@
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
-            .city-header h2 {
-                font-size: 2em;
-            }
-            
-            .info-grid {
+            .stats-mini,
+            .weather-mini {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .weather-info {
-                grid-template-columns: repeat(2, 1fr);
+            .suggestion-items {
+                grid-template-columns: 1fr;
             }
             
             .map-container {
-                width: 100%;
-                height: 350px;
-            }
-
-            .prompt-tabs {
-                flex-direction: column;
+                height: 250px;
             }
             
-            .prompt-tab {
-                margin-bottom: 5px;
+            .chat-panel {
+                height: 400px;
             }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .weather-info {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Custom scrollbar */
-        .container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .container::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
-            border-radius: 4px;
-        }
-
-        .container::-webkit-scrollbar-thumb {
-            background: rgba(102, 126, 234, 0.5);
-            border-radius: 4px;
-        }
-
-        .container::-webkit-scrollbar-thumb:hover {
-            background: rgba(102, 126, 234, 0.7);
         }
     </style>
 </head>
@@ -530,7 +551,7 @@
     <div class="container">
         <div class="header">
             <h1>🎲 Random AI-Agent Explorer</h1>
-            <p>Discover amazing places around the world with a single click!</p>
+            <p>Discover amazing places and chat with AI about them!</p>
             <button class="explore-btn" id="exploreBtn">
                 <span>Take me somewhere random!</span>
                 <span>🌍</span>
@@ -539,77 +560,90 @@
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p style="margin-left: 20px; color: #667eea; font-size: 1.2em;">Finding your adventure...</p>
+            <p style="margin-left: 15px; color: #667eea; font-size: 1.1em;">Finding your adventure...</p>
         </div>
 
         <div class="error-message" id="errorMessage"></div>
 
-        <div class="map-section">
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-        </div>
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
 
-        <div class="city-info" id="cityInfo">
-            <div class="city-header" id="cityHeader">
-                <h2 id="cityName"></h2>
-                <p id="countryName"></p>
-                <div class="coordinates" id="coordinates"></div>
-            </div>
+                <div class="city-info" id="cityInfo">
+                    <div class="city-header" id="cityHeader">
+                        <h2 id="cityName"></h2>
+                        <p id="countryName"></p>
+                        <div class="coordinates" id="coordinates"></div>
+                    </div>
 
-            <div class="stats-section">
-                <h3>📊 Quick Stats</h3>
-                <div class="stats-grid" id="statsGrid">
-                    <div class="stat-item">
-                        <div class="stat-number" id="timezone">UTC+2</div>
-                        <div class="stat-label">Time Zone</div>
+                    <div class="compact-grid">
+                        <div class="info-card">
+                            <h3>📊 Quick Stats</h3>
+                            <div class="stats-mini" id="statsGrid">
+                                <div class="stat-item">
+                                    <div class="stat-number" id="timezone">UTC+2</div>
+                                    <div class="stat-label">Time Zone</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="population">2.4M</div>
+                                    <div class="stat-label">Population</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="elevation">1,086m</div>
+                                    <div class="stat-label">Elevation</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="founded">1652</div>
+                                    <div class="stat-label">Founded</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>🌟 Quick Facts</h3>
+                            <div id="factsContainer"></div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>🌤️ Current Weather</h3>
+                            <div class="weather-mini" id="weatherInfo"></div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="population">2.4M</div>
-                        <div class="stat-label">Population</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="elevation">1,086m</div>
-                        <div class="stat-label">Elevation</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="founded">1652</div>
-                        <div class="stat-label">Founded</div>
+
+                    <div class="suggestions-row">
+                        <h3>✈️ Travel Suggestions</h3>
+                        <div class="suggestion-items" id="routeInfo"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="info-grid">
-                <div class="info-section">
-                    <h3>🌟 Quick Facts</h3>
-                    <div id="factsContainer"></div>
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <span>🤖</span>
+                    <span>AI Travel Assistant</span>
                 </div>
-
-                <div class="info-section">
-                    <h3>🌤️ Current Weather</h3>
-                    <div class="weather-info" id="weatherInfo"></div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai">
+                        <div class="message-content">
+                            👋 Hi! I'm your AI travel assistant. Once you explore a random city, I'll have all the knowledge about that destination and can answer any questions you have about it. Try clicking the explore button above!
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="route-section">
-                <h3>✈️ Travel Suggestions</h3>
-                <div id="routeInfo"></div>
-            </div>
-
-            <div class="prompt-section">
-                <h3>🤖 AI Travel Prompts</h3>
-                <p style="opacity: 0.9; margin-bottom: 20px; font-size: 1.05em;">
-                    Copy these prompts to use with ChatGPT, Claude, or any AI assistant for detailed travel planning!
-                </p>
-                
-                <div class="prompt-tabs">
-                    <button class="prompt-tab active" onclick="switchPromptTab('itinerary')">📋 Itinerary</button>
-                    <button class="prompt-tab" onclick="switchPromptTab('budget')">💰 Budget</button>
-                    <button class="prompt-tab" onclick="switchPromptTab('culture')">🎭 Culture</button>
-                    <button class="prompt-tab" onclick="switchPromptTab('food')">🍽️ Food</button>
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
                 </div>
-
-                <div id="promptContainers"></div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about the current city..." disabled>
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <span>→</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -618,13 +652,11 @@
     <script>
         // Configuration
         const GEMINI_API_KEY = "AIzaSyAUoMONS3OL3z0iMKWj2AV0ntg7wSQuSTs";
-        const WEATHER_API_KEY = "demo_key";
         
         let currentCity = null;
-        let currentPromptTab = 'itinerary';
-        let aiResponses = {}; // Cache for AI-generated responses
+        let chatHistory = [];
         
-        // Random cities database with coordinates and interesting facts
+        // Random cities database
         const cities = [
             {
                 name: "Reykjavik",
@@ -711,30 +743,6 @@
                 founded: "1062"
             },
             {
-                name: "Luang Prabang",
-                country: "Laos",
-                lat: 19.8845,
-                lng: 102.1348,
-                flag: "🇱🇦",
-                facts: ["UNESCO World Heritage", "Buddhist temples", "Mekong River confluence"],
-                timezone: "UTC+7",
-                population: "56K",
-                elevation: "305m",
-                founded: "698"
-            },
-            {
-                name: "Dubrovnik",
-                country: "Croatia",
-                lat: 42.6507,
-                lng: 18.0944,
-                flag: "🇭🇷",
-                facts: ["Pearl of Adriatic", "Game of Thrones filming", "Medieval city walls"],
-                timezone: "UTC+1",
-                population: "42K",
-                elevation: "28m",
-                founded: "614"
-            },
-            {
                 name: "Chiang Mai",
                 country: "Thailand",
                 lat: 18.7883,
@@ -745,30 +753,6 @@
                 population: "131K",
                 elevation: "316m",
                 founded: "1296"
-            },
-            {
-                name: "Salzburg",
-                country: "Austria",
-                lat: 47.8095,
-                lng: 13.0550,
-                flag: "🇦🇹",
-                facts: ["Mozart's birthplace", "Sound of Music setting", "Baroque architecture"],
-                timezone: "UTC+1",
-                population: "156K",
-                elevation: "424m",
-                founded: "696"
-            },
-            {
-                name: "Queenstown",
-                country: "New Zealand",
-                lat: -45.0312,
-                lng: 168.6626,
-                flag: "🇳🇿",
-                facts: ["Adventure capital", "Lake Wakatipu views", "Bungee jumping origin"],
-                timezone: "UTC+12",
-                population: "53K",
-                elevation: "310m",
-                founded: "1862"
             }
         ];
 
@@ -783,119 +767,37 @@
             }).addTo(map);
         }
 
-        // Generate travel prompts for different purposes
-        function generateTravelPrompts(city, country, facts) {
-            const prompts = {
-                itinerary: `Create a detailed 5-day itinerary for ${city}, ${country}. Include:
-
-📅 Day-by-day breakdown with specific activities
-🏛️ Must-visit attractions and their opening hours
-🚊 Transportation options between locations
-💡 Local tips and hidden gems
-⏰ Recommended timing for each activity
-🎫 Estimated costs for attractions
-
-Key highlights to include: ${facts.join(', ')}
-
-Format as a clear, actionable travel plan with specific recommendations.`,
-
-                budget: `Create a comprehensive budget breakdown for a 7-day trip to ${city}, ${country}:
-
-💰 ACCOMMODATION:
-- Budget options ($X-X/night)
-- Mid-range hotels ($X-X/night) 
-- Luxury stays ($X-X/night)
-
-🍽️ FOOD & DINING:
-- Street food and local eats
-- Mid-range restaurants
-- Fine dining experiences
-- Daily food budget estimates
-
-🚊 TRANSPORTATION:
-- Airport transfers
-- Local transport (buses, metro, taxis)
-- Day trip costs
-
-🎯 ACTIVITIES & ATTRACTIONS:
-- Free activities and sights
-- Paid attractions with entry fees
-- Tours and experiences
-- Shopping budget
-
-Provide total estimated costs for budget, mid-range, and luxury travel styles.`,
-
-                culture: `Provide an in-depth cultural guide for ${city}, ${country}:
-
-🏛️ HISTORY & HERITAGE:
-- Historical significance and timeline
-- Cultural landmarks and monuments
-- Museums and cultural sites
-
-🎭 LOCAL CUSTOMS & ETIQUETTE:
-- Social norms and behavior
-- Dress codes and expectations
-- Tipping culture and practices
-
-🗣️ LANGUAGE & COMMUNICATION:
-- Essential phrases to know
-- Language tips for travelers
-- Non-verbal communication insights
-
-🎉 FESTIVALS & CELEBRATIONS:
-- Annual festivals and events
-- Traditional celebrations
-- Best times to experience local culture
-
-🎨 ARTS & CRAFTS:
-- Traditional art forms
-- Local crafts and souvenirs
-- Where to experience authentic culture
-
-Include specific examples and practical advice for cultural immersion.`,
-
-                food: `Create the ultimate food lover's guide to ${city}, ${country}:
-
-🍽️ SIGNATURE DISHES TO TRY:
-- Traditional local specialties
-- Regional variations and preparations
-- Where to find the best versions
-
-🏪 DINING EXPERIENCES:
-- Street food markets and vendors
-- Traditional restaurants and taverns
-- Fine dining establishments
-- Food halls and local markets
-
-☕ BEVERAGES & DRINKS:
-- Traditional drinks and beverages
-- Local coffee/tea culture
-- Alcoholic specialties
-
-🥘 COOKING EXPERIENCES:
-- Cooking classes available
-- Food tours and tastings
-- Market tours with local chefs
-
-⚠️ DIETARY CONSIDERATIONS:
-- Vegetarian/vegan options
-- Allergies and dietary restrictions
-- Safe eating practices for travelers
-
-🛒 FOOD SHOPPING:
-- Best local markets
-- Specialty food stores
-- Food souvenirs to take home
-
-Include specific restaurant recommendations and must-try dishes with descriptions.`
-            };
-
-            return prompts;
-        }
-
-        // Generate AI responses using Gemini API
-        async function generateAIResponse(promptText, city, country) {
+        // Chat functionality
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message || !currentCity) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTyping();
+            
             try {
+                // Create context-aware prompt
+                const contextPrompt = `You are a knowledgeable travel assistant with expertise about ${currentCity.name}, ${currentCity.country}. Here's what you know about this destination:
+
+City: ${currentCity.name}
+Country: ${currentCity.country}
+Location: ${currentCity.lat}°, ${currentCity.lng}°
+Key Facts: ${currentCity.facts.join(', ')}
+Population: ${currentCity.population}
+Timezone: ${currentCity.timezone}
+Elevation: ${currentCity.elevation}
+Founded: ${currentCity.founded}
+
+User question: ${message}
+
+Provide a helpful, informative response about ${currentCity.name}, ${currentCity.country}. Be specific, engaging, and include practical travel advice when relevant. Keep responses conversational but informative (2-3 paragraphs max).`;
+
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: {
@@ -904,154 +806,60 @@ Include specific restaurant recommendations and must-try dishes with description
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: promptText
+                                text: contextPrompt
                             }]
                         }]
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error('Gemini API error');
+                    throw new Error('API error');
                 }
 
                 const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
+                const aiResponse = data.candidates[0].content.parts[0].text;
+                
+                hideTyping();
+                addMessage(aiResponse, 'ai');
+                
             } catch (error) {
-                console.error('Error generating AI response:', error);
-                return `Sorry, I couldn't generate a detailed response for ${city}, ${country} at the moment. Please try the prompt with your preferred AI assistant, or click the refresh button to try again.`;
+                console.error('Chat error:', error);
+                hideTyping();
+                addMessage("I'm sorry, I'm having trouble connecting right now. Please try again later!", 'ai');
             }
         }
 
-        // Switch between prompt tabs
-        function switchPromptTab(tabName) {
-            currentPromptTab = tabName;
+        function addMessage(content, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
             
-            // Update tab active states
-            document.querySelectorAll('.prompt-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = content;
             
-            // Update prompt content
-            if (currentCity) {
-                updatePromptDisplay();
-            }
+            messageDiv.appendChild(contentDiv);
+            messagesContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Update prompt display based on current tab
-        function updatePromptDisplay() {
-            const container = document.getElementById('promptContainers');
-            const prompts = generateTravelPrompts(currentCity.name, currentCity.country, currentCity.facts);
-            
-            const promptTypes = {
-                'itinerary': { title: '📋 Complete Itinerary Planner', icon: '📋' },
-                'budget': { title: '💰 Budget Breakdown Guide', icon: '💰' },
-                'culture': { title: '🎭 Cultural Immersion Guide', icon: '🎭' },
-                'food': { title: '🍽️ Ultimate Food Guide', icon: '🍽️' }
-            };
-
-            const currentPrompt = prompts[currentPromptTab];
-            const promptInfo = promptTypes[currentPromptTab];
-
-            container.innerHTML = `
-                <div class="prompt-container">
-                    <div class="prompt-header">
-                        <div class="prompt-title">${promptInfo.title}</div>
-                        <button class="copy-btn" onclick="copyPrompt('${currentPromptTab}')">
-                            <span id="copyIcon-${currentPromptTab}">📋</span>
-                            <span id="copyText-${currentPromptTab}">Copy</span>
-                        </button>
-                    </div>
-                    <div class="prompt-content" id="prompt-${currentPromptTab}">${currentPrompt}</div>
-                </div>
-            `;
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Copy prompt to clipboard
-        async function copyPrompt(promptType) {
-            const container = document.getElementById('promptContainers');
-            const prompts = generateTravelPrompts(currentCity.name, currentCity.country, currentCity.facts);
-            const promptText = prompts[promptType];
-            
-            try {
-                await navigator.clipboard.writeText(promptText);
-                
-                // Update button to show success
-                const icon = document.getElementById(`copyIcon-${promptType}`);
-                const text = document.getElementById(`copyText-${promptType}`);
-                const button = icon.closest('.copy-btn');
-                
-                icon.textContent = '✅';
-                text.textContent = 'Copied!';
-                button.classList.add('copied');
-                
-                setTimeout(() => {
-                    icon.textContent = '📋';
-                    text.textContent = 'Copy';
-                    button.classList.remove('copied');
-                }, 2000);
-                
-            } catch (err) {
-                console.error('Failed to copy prompt:', err);
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = promptText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
         }
 
-        // Generate interesting facts using Gemini AI
-        async function generateCityFacts(city, country) {
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: `Generate 5 interesting, unique facts about ${city}, ${country}. Make them fascinating and travel-worthy. Format as a simple JSON array of strings. Keep each fact under 50 characters.`
-                            }]
-                        }]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Gemini API error');
-                }
-
-                const data = await response.json();
-                const text = data.candidates[0].content.parts[0].text;
-                
-                // Try to extract JSON from the response
-                const jsonMatch = text.match(/\[[\s\S]*\]/);
-                if (jsonMatch) {
-                    return JSON.parse(jsonMatch[0]);
-                }
-                
-                // Fallback to splitting by lines
-                return text.split('\n').filter(line => line.trim()).slice(0, 5);
-            } catch (error) {
-                console.error('Error generating facts:', error);
-                return [
-                    "Rich cultural heritage",
-                    "Unique local cuisine",
-                    "Historical significance",
-                    "Natural beauty",
-                    "Friendly locals"
-                ];
-            }
-        }
-
-        // Generate mock weather data (in a real app, you'd use a weather API)
+        // Generate mock weather data
         function generateWeatherData() {
-            const temperatures = [15, 18, 22, 25, 28, 12, 8, 30, 35, 5];
-            const conditions = ["Sunny", "Partly Cloudy", "Rainy", "Overcast", "Clear"];
-            const humidity = [45, 55, 70, 60, 40, 80, 35, 65];
+            const temperatures = [15, 18, 22, 25, 28, 12, 8, 30];
+            const conditions = ["Sunny", "Cloudy", "Rainy", "Clear"];
+            const humidity = [45, 55, 70, 60, 40, 80];
             
             return {
                 temperature: temperatures[Math.floor(Math.random() * temperatures.length)],
@@ -1061,8 +869,8 @@ Include specific restaurant recommendations and must-try dishes with description
             };
         }
 
-        // Generate travel suggestions using Gemini AI
-        async function generateTravelSuggestions(city, country) {
+        // Generate AI content
+        async function generateCityContent(city, country) {
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
@@ -1072,32 +880,29 @@ Include specific restaurant recommendations and must-try dishes with description
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: `Generate 3 specific travel suggestions for visiting ${city}, ${country}. Include: 1) Best time to visit, 2) Must-see attraction, 3) Local food to try. Keep each suggestion concise (under 60 characters).`
+                                text: `Generate 3 interesting travel facts about ${city}, ${country} and 3 specific travel suggestions (best time to visit, must-see attraction, local food). Keep each item under 50 characters. Format as: FACTS: fact1|fact2|fact3 SUGGESTIONS: sug1|sug2|sug3`
                             }]
                         }]
                     })
                 });
 
-                if (!response.ok) {
-                    throw new Error('Gemini API error');
-                }
+                if (!response.ok) throw new Error('API error');
 
                 const data = await response.json();
                 const text = data.candidates[0].content.parts[0].text;
                 
-                const suggestions = text.split('\n').filter(line => line.trim()).slice(0, 3);
-                return suggestions.length >= 3 ? suggestions : [
-                    "Best time: Spring and Fall for pleasant weather",
-                    "Must-see: Historic city center and main landmarks",
-                    "Try: Traditional local specialties and street food"
-                ];
+                const facts = text.match(/FACTS:\s*(.+?)(?=SUGGESTIONS:|$)/)?.[1]?.split('|') || 
+                    ["Rich cultural heritage", "Unique architecture", "Local traditions"];
+                const suggestions = text.match(/SUGGESTIONS:\s*(.+)/)?.[1]?.split('|') || 
+                    ["Visit in spring/fall", "Explore historic center", "Try local specialties"];
+                
+                return { facts: facts.slice(0, 3), suggestions: suggestions.slice(0, 3) };
             } catch (error) {
-                console.error('Error generating travel suggestions:', error);
-                return [
-                    "Best time: Check seasonal weather patterns",
-                    "Must-see: City's most iconic landmarks",
-                    "Food: Sample authentic local cuisine"
-                ];
+                console.error('Error generating content:', error);
+                return {
+                    facts: ["Rich cultural heritage", "Unique local cuisine", "Beautiful architecture"],
+                    suggestions: ["Best time: Spring/Fall", "Must-see: City center", "Try: Local dishes"]
+                };
             }
         }
 
@@ -1107,6 +912,8 @@ Include specific restaurant recommendations and must-try dishes with description
             const loading = document.getElementById('loading');
             const cityInfo = document.getElementById('cityInfo');
             const errorMessage = document.getElementById('errorMessage');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
 
             try {
                 // Show loading state
@@ -1143,19 +950,15 @@ Include specific restaurant recommendations and must-try dishes with description
                 document.getElementById('elevation').textContent = randomCity.elevation;
                 document.getElementById('founded').textContent = randomCity.founded;
 
-                // Generate content with AI
-                const [aiFacts, travelSuggestions] = await Promise.all([
-                    generateCityFacts(randomCity.name, randomCity.country),
-                    generateTravelSuggestions(randomCity.name, randomCity.country)
-                ]);
-
-                // Use AI facts if available, fallback to predefined
-                const facts = aiFacts.length > 0 ? aiFacts : randomCity.facts;
-                currentCity.facts = facts; // Update current city with new facts
+                // Generate AI content
+                const aiContent = await generateCityContent(randomCity.name, randomCity.country);
+                
+                // Update current city facts
+                currentCity.facts = aiContent.facts;
 
                 // Update facts
                 const factsContainer = document.getElementById('factsContainer');
-                factsContainer.innerHTML = facts.map(fact => 
+                factsContainer.innerHTML = aiContent.facts.map(fact => 
                     `<div class="fact-item">💡 ${fact}</div>`
                 ).join('');
 
@@ -1183,23 +986,26 @@ Include specific restaurant recommendations and must-try dishes with description
 
                 // Update travel suggestions
                 const routeInfo = document.getElementById('routeInfo');
-                routeInfo.innerHTML = travelSuggestions.map(suggestion => 
-                    `<div class="route-item">✨ ${suggestion}</div>`
+                routeInfo.innerHTML = aiContent.suggestions.map(suggestion => 
+                    `<div class="suggestion-item">✨ ${suggestion}</div>`
                 ).join('');
 
-                // Update prompts
-                updatePromptDisplay();
+                // Enable chat
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                chatInput.placeholder = `Ask me anything about ${randomCity.name}...`;
+
+                // Add AI welcome message for the new city
+                addMessage(`🌟 I now have detailed knowledge about ${randomCity.name}, ${randomCity.country}! Ask me anything about attractions, food, culture, weather, travel tips, or anything else you'd like to know about this destination.`, 'ai');
 
                 // Show city info with animation
                 setTimeout(() => {
                     cityInfo.style.display = 'block';
-                    cityInfo.classList.add('pulse');
-                    setTimeout(() => cityInfo.classList.remove('pulse'), 1000);
                 }, 500);
 
             } catch (error) {
                 console.error('Error exploring city:', error);
-                errorMessage.textContent = 'Oops! Failed to load city information. Please try again!';
+                errorMessage.textContent = 'Failed to load city information. Please try again!';
                 errorMessage.style.display = 'block';
             } finally {
                 loading.style.display = 'none';
@@ -1213,11 +1019,14 @@ Include specific restaurant recommendations and must-try dishes with description
             
             document.getElementById('exploreBtn').addEventListener('click', exploreRandomCity);
             
-            // Add some initial flair
-            setTimeout(() => {
-                document.querySelector('.explore-btn').classList.add('pulse');
-                setTimeout(() => document.querySelector('.explore-btn').classList.remove('pulse'), 2000);
-            }, 1000);
+            // Chat event listeners
+            document.getElementById('sendBtn').addEventListener('click', sendMessage);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
         });
     </script>
 </body>
