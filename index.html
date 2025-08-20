@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Random Explorer Agent</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            min-height: calc(100vh - 40px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 25px;
+        }
+
+        .explore-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+        }
+
+        .explore-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .explore-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .map-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .map-container {
+            width: 600px;
+            height: 300px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .city-info {
+            display: none;
+            margin-top: 40px;
+        }
+
+        .city-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .city-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .city-header p {
+            opacity: 0.9;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .coordinates {
+            font-family: 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            display: inline-block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stats-section h3 {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .fact-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            font-size: 1em;
+            transition: transform 0.2s ease;
+        }
+
+        .fact-item:hover {
+            transform: translateX(5px);
+        }
+
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .weather-item {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .weather-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .weather-item h4 {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .weather-item p {
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        .route-section {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .route-section h3 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .route-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            transition: transform 0.2s ease;
+        }
+
+        .route-item:hover {
+            transform: translateX(5px);
+        }
+
+        .prompt-section {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .prompt-section h3 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .prompt-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .prompt-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .prompt-title {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background: #00b894;
+        }
+
+        .prompt-content {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            border-radius: 0 0 15px 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .prompt-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .prompt-tab {
+            flex: 1;
+            padding: 12px 15px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .prompt-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .prompt-tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .error-message {
+            background: #ff7675;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            display: none;
+            font-size: 1.1em;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Custom scrollbar for prompt content */
+        .prompt-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .prompt-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .prompt-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .city-header h2 {
+                font-size: 2em;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .weather-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .map-container {
+                width: 100%;
+                height: 350px;
+            }
+
+            .prompt-tabs {
+                flex-direction: column;
+            }
+            
+            .prompt-tab {
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .weather-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom scrollbar */
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 4px;
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎲 Random AI-Agent Explorer</h1>
+            <p>Discover amazing places around the world with a single click!</p>
+            <button class="explore-btn" id="exploreBtn">
+                <span>Take me somewhere random!</span>
+                <span>🌍</span>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-left: 20px; color: #667eea; font-size: 1.2em;">Finding your adventure...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="map-section">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <div class="city-info" id="cityInfo">
+            <div class="city-header" id="cityHeader">
+                <h2 id="cityName"></h2>
+                <p id="countryName"></p>
+                <div class="coordinates" id="coordinates"></div>
+            </div>
+
+            <div class="stats-section">
+                <h3>📊 Quick Stats</h3>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="timezone">UTC+2</div>
+                        <div class="stat-label">Time Zone</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="population">2.4M</div>
+                        <div class="stat-label">Population</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="elevation">1,086m</div>
+                        <div class="stat-label">Elevation</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="founded">1652</div>
+                        <div class="stat-label">Founded</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-section">
+                    <h3>🌟 Quick Facts</h3>
+                    <div id="factsContainer"></div>
+                </div>
+
+                <div class="info-section">
+                    <h3>🌤️ Current Weather</h3>
+                    <div class="weather-info" id="weatherInfo"></div>
+                </div>
+            </div>
+
+            <div class="route-section">
+                <h3>✈️ Travel Suggestions</h3>
+                <div id="routeInfo"></div>
+            </div>
+
+            <div class="prompt-section">
+                <h3>🤖 AI Travel Prompts</h3>
+                <p style="opacity: 0.9; margin-bottom: 20px; font-size: 1.05em;">
+                    Copy these prompts to use with ChatGPT, Claude, or any AI assistant for detailed travel planning!
+                </p>
+                
+                <div class="prompt-tabs">
+                    <button class="prompt-tab active" onclick="switchPromptTab('itinerary')">📋 Itinerary</button>
+                    <button class="prompt-tab" onclick="switchPromptTab('budget')">💰 Budget</button>
+                    <button class="prompt-tab" onclick="switchPromptTab('culture')">🎭 Culture</button>
+                    <button class="prompt-tab" onclick="switchPromptTab('food')">🍽️ Food</button>
+                </div>
+
+                <div id="promptContainers"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Configuration
+        const GEMINI_API_KEY = "AIzaSyAUoMONS3OL3z0iMKWj2AV0ntg7wSQuSTs";
+        const WEATHER_API_KEY = "demo_key";
+        
+        let currentCity = null;
+        let currentPromptTab = 'itinerary';
+        
+        // Random cities database with coordinates and interesting facts
+        const cities = [
+            {
+                name: "Reykjavik",
+                country: "Iceland",
+                lat: 64.1466,
+                lng: -21.9426,
+                flag: "🇮🇸",
+                facts: ["Northern Lights capital", "Geothermal energy city", "No mosquitoes exist here"],
+                timezone: "UTC+0",
+                population: "131K",
+                elevation: "61m",
+                founded: "874"
+            },
+            {
+                name: "Kyoto",
+                country: "Japan", 
+                lat: 35.0116,
+                lng: 135.7681,
+                flag: "🇯🇵",
+                facts: ["Former imperial capital", "Over 2000 temples", "Bamboo forest trails"],
+                timezone: "UTC+9",
+                population: "1.5M",
+                elevation: "56m",
+                founded: "794"
+            },
+            {
+                name: "Cape Town",
+                country: "South Africa",
+                lat: -33.9249,
+                lng: 18.4241,
+                flag: "🇿🇦",
+                facts: ["Two ocean confluence", "Table Mountain views", "Penguin colonies nearby"],
+                timezone: "UTC+2",
+                population: "4.6M",
+                elevation: "25m",
+                founded: "1652"
+            },
+            {
+                name: "Bergen",
+                country: "Norway",
+                lat: 60.3913,
+                lng: 5.3221,
+                flag: "🇳🇴",
+                facts: ["Gateway to fjords", "Colorful wooden houses", "Rainiest city in Europe"],
+                timezone: "UTC+1",
+                population: "285K",
+                elevation: "56m",
+                founded: "1070"
+            },
+            {
+                name: "Cusco",
+                country: "Peru",
+                lat: -13.5319,
+                lng: -71.9675,
+                flag: "🇵🇪",
+                facts: ["Ancient Inca capital", "Gateway to Machu Picchu", "11,200 feet altitude"],
+                timezone: "UTC-5",
+                population: "428K",
+                elevation: "3,399m",
+                founded: "1100"
+            },
+            {
+                name: "Tallinn",
+                country: "Estonia",
+                lat: 59.4370,
+                lng: 24.7536,
+                flag: "🇪🇪",
+                facts: ["Medieval old town", "Digital nomad paradise", "Most startups per capita"],
+                timezone: "UTC+2",
+                population: "437K",
+                elevation: "9m",
+                founded: "1248"
+            },
+            {
+                name: "Marrakech",
+                country: "Morocco",
+                lat: 31.6295,
+                lng: -7.9811,
+                flag: "🇲🇦",
+                facts: ["Red city walls", "Bustling souks", "Atlas Mountains gateway"],
+                timezone: "UTC+1",
+                population: "928K",
+                elevation: "466m",
+                founded: "1062"
+            },
+            {
+                name: "Luang Prabang",
+                country: "Laos",
+                lat: 19.8845,
+                lng: 102.1348,
+                flag: "🇱🇦",
+                facts: ["UNESCO World Heritage", "Buddhist temples", "Mekong River confluence"],
+                timezone: "UTC+7",
+                population: "56K",
+                elevation: "305m",
+                founded: "698"
+            },
+            {
+                name: "Dubrovnik",
+                country: "Croatia",
+                lat: 42.6507,
+                lng: 18.0944,
+                flag: "🇭🇷",
+                facts: ["Pearl of Adriatic", "Game of Thrones filming", "Medieval city walls"],
+                timezone: "UTC+1",
+                population: "42K",
+                elevation: "28m",
+                founded: "614"
+            },
+            {
+                name: "Chiang Mai",
+                country: "Thailand",
+                lat: 18.7883,
+                lng: 98.9853,
+                flag: "🇹🇭",
+                facts: ["Rose of the North", "300+ temples", "Digital nomad hub"],
+                timezone: "UTC+7",
+                population: "131K",
+                elevation: "316m",
+                founded: "1296"
+            },
+            {
+                name: "Salzburg",
+                country: "Austria",
+                lat: 47.8095,
+                lng: 13.0550,
+                flag: "🇦🇹",
+                facts: ["Mozart's birthplace", "Sound of Music setting", "Baroque architecture"],
+                timezone: "UTC+1",
+                population: "156K",
+                elevation: "424m",
+                founded: "696"
+            },
+            {
+                name: "Queenstown",
+                country: "New Zealand",
+                lat: -45.0312,
+                lng: 168.6626,
+                flag: "🇳🇿",
+                facts: ["Adventure capital", "Lake Wakatipu views", "Bungee jumping origin"],
+                timezone: "UTC+12",
+                population: "53K",
+                elevation: "310m",
+                founded: "1862"
+            }
+        ];
+
+        // Initialize map
+        let map;
+        let currentMarker;
+
+        function initMap() {
+            map = L.map('map').setView([20, 0], 2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        }
+
+        // Generate travel prompts for different purposes
+        function generateTravelPrompts(city, country, facts) {
+            const prompts = {
+                itinerary: `Create a detailed 5-day itinerary for ${city}, ${country}. Include:
+
+📅 Day-by-day breakdown with specific activities
+🏛️ Must-visit attractions and their opening hours
+🚊 Transportation options between locations
+💡 Local tips and hidden gems
+⏰ Recommended timing for each activity
+🎫 Estimated costs for attractions
+
+Key highlights to include: ${facts.join(', ')}
+
+Format as a clear, actionable travel plan with specific recommendations.`,
+
+                budget: `Create a comprehensive budget breakdown for a 7-day trip to ${city}, ${country}:
+
+💰 ACCOMMODATION:
+- Budget options ($X-X/night)
+- Mid-range hotels ($X-X/night) 
+- Luxury stays ($X-X/night)
+
+🍽️ FOOD & DINING:
+- Street food and local eats
+- Mid-range restaurants
+- Fine dining experiences
+- Daily food budget estimates
+
+🚊 TRANSPORTATION:
+- Airport transfers
+- Local transport (buses, metro, taxis)
+- Day trip costs
+
+🎯 ACTIVITIES & ATTRACTIONS:
+- Free activities and sights
+- Paid attractions with entry fees
+- Tours and experiences
+- Shopping budget
+
+Provide total estimated costs for budget, mid-range, and luxury travel styles.`,
+
+                culture: `Provide an in-depth cultural guide for ${city}, ${country}:
+
+🏛️ HISTORY & HERITAGE:
+- Historical significance and timeline
+- Cultural landmarks and monuments
+- Museums and cultural sites
+
+🎭 LOCAL CUSTOMS & ETIQUETTE:
+- Social norms and behavior
+- Dress codes and expectations
+- Tipping culture and practices
+
+🗣️ LANGUAGE & COMMUNICATION:
+- Essential phrases to know
+- Language tips for travelers
+- Non-verbal communication insights
+
+🎉 FESTIVALS & CELEBRATIONS:
+- Annual festivals and events
+- Traditional celebrations
+- Best times to experience local culture
+
+🎨 ARTS & CRAFTS:
+- Traditional art forms
+- Local crafts and souvenirs
+- Where to experience authentic culture
+
+Include specific examples and practical advice for cultural immersion.`,
+
+                food: `Create the ultimate food lover's guide to ${city}, ${country}:
+
+🍽️ SIGNATURE DISHES TO TRY:
+- Traditional local specialties
+- Regional variations and preparations
+- Where to find the best versions
+
+🏪 DINING EXPERIENCES:
+- Street food markets and vendors
+- Traditional restaurants and taverns
+- Fine dining establishments
+- Food halls and local markets
+
+☕ BEVERAGES & DRINKS:
+- Traditional drinks and beverages
+- Local coffee/tea culture
+- Alcoholic specialties
+
+🥘 COOKING EXPERIENCES:
+- Cooking classes available
+- Food tours and tastings
+- Market tours with local chefs
+
+⚠️ DIETARY CONSIDERATIONS:
+- Vegetarian/vegan options
+- Allergies and dietary restrictions
+- Safe eating practices for travelers
+
+🛒 FOOD SHOPPING:
+- Best local markets
+- Specialty food stores
+- Food souvenirs to take home
+
+Include specific restaurant recommendations and must-try dishes with descriptions.`
+            };
+
+            return prompts;
+        }
+
+        // Switch between prompt tabs
+        function switchPromptTab(tabName) {
+            currentPromptTab = tabName;
+            
+            // Update tab active states
+            document.querySelectorAll('.prompt-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update prompt content
+            if (currentCity) {
+                updatePromptDisplay();
+            }
+        }
+
+        // Update prompt display based on current tab
+        function updatePromptDisplay() {
+            const container = document.getElementById('promptContainers');
+            const prompts = generateTravelPrompts(currentCity.name, currentCity.country, currentCity.facts);
+            
+            const promptTypes = {
+                'itinerary': { title: '📋 Complete Itinerary Planner', icon: '📋' },
+                'budget': { title: '💰 Budget Breakdown Guide', icon: '💰' },
+                'culture': { title: '🎭 Cultural Immersion Guide', icon: '🎭' },
+                'food': { title: '🍽️ Ultimate Food Guide', icon: '🍽️' }
+            };
+
+            const currentPrompt = prompts[currentPromptTab];
+            const promptInfo = promptTypes[currentPromptTab];
+
+            container.innerHTML = `
+                <div class="prompt-container">
+                    <div class="prompt-header">
+                        <div class="prompt-title">${promptInfo.title}</div>
+                        <button class="copy-btn" onclick="copyPrompt('${currentPromptTab}')">
+                            <span id="copyIcon-${currentPromptTab}">📋</span>
+                            <span id="copyText-${currentPromptTab}">Copy</span>
+                        </button>
+                    </div>
+                    <div class="prompt-content" id="prompt-${currentPromptTab}">${currentPrompt}</div>
+                </div>
+            `;
+        }
+
+        // Copy prompt to clipboard
+        async function copyPrompt(promptType) {
+            const container = document.getElementById('promptContainers');
+            const prompts = generateTravelPrompts(currentCity.name, currentCity.country, currentCity.facts);
+            const promptText = prompts[promptType];
+            
+            try {
+                await navigator.clipboard.writeText(promptText);
+                
+                // Update button to show success
+                const icon = document.getElementById(`copyIcon-${promptType}`);
+                const text = document.getElementById(`copyText-${promptType}`);
+                const button = icon.closest('.copy-btn');
+                
+                icon.textContent = '✅';
+                text.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    icon.textContent = '📋';
+                    text.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+                
+            } catch (err) {
+                console.error('Failed to copy prompt:', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = promptText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Generate interesting facts using Gemini AI
+        async function generateCityFacts(city, country) {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `Generate 5 interesting, unique facts about ${city}, ${country}. Make them fascinating and travel-worthy. Format as a simple JSON array of strings. Keep each fact under 50 characters.`
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gemini API error');
+                }
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                
+                // Try to extract JSON from the response
+                const jsonMatch = text.match(/\[[\s\S]*\]/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+                
+                // Fallback to splitting by lines
+                return text.split('\n').filter(line => line.trim()).slice(0, 5);
+            } catch (error) {
+                console.error('Error generating facts:', error);
+                return [
+                    "Rich cultural heritage",
+                    "Unique local cuisine",
+                    "Historical significance",
+                    "Natural beauty",
+                    "Friendly locals"
+                ];
+            }
+        }
+
+        // Generate mock weather data (in a real app, you'd use a weather API)
+        function generateWeatherData() {
+            const temperatures = [15, 18, 22, 25, 28, 12, 8, 30, 35, 5];
+            const conditions = ["Sunny", "Partly Cloudy", "Rainy", "Overcast", "Clear"];
+            const humidity = [45, 55, 70, 60, 40, 80, 35, 65];
+            
+            return {
+                temperature: temperatures[Math.floor(Math.random() * temperatures.length)],
+                condition: conditions[Math.floor(Math.random() * conditions.length)],
+                humidity: humidity[Math.floor(Math.random() * humidity.length)],
+                windSpeed: Math.floor(Math.random() * 20) + 5
+            };
+        }
+
+        // Generate travel suggestions using Gemini AI
+        async function generateTravelSuggestions(city, country) {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `Generate 3 specific travel suggestions for visiting ${city}, ${country}. Include: 1) Best time to visit, 2) Must-see attraction, 3) Local food to try. Keep each suggestion concise (under 60 characters).`
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gemini API error');
+                }
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+                
+                const suggestions = text.split('\n').filter(line => line.trim()).slice(0, 3);
+                return suggestions.length >= 3 ? suggestions : [
+                    "Best time: Spring and Fall for pleasant weather",
+                    "Must-see: Historic city center and main landmarks",
+                    "Try: Traditional local specialties and street food"
+                ];
+            } catch (error) {
+                console.error('Error generating travel suggestions:', error);
+                return [
+                    "Best time: Check seasonal weather patterns",
+                    "Must-see: City's most iconic landmarks",
+                    "Food: Sample authentic local cuisine"
+                ];
+            }
+        }
+
+        // Main exploration function
+        async function exploreRandomCity() {
+            const exploreBtn = document.getElementById('exploreBtn');
+            const loading = document.getElementById('loading');
+            const cityInfo = document.getElementById('cityInfo');
+            const errorMessage = document.getElementById('errorMessage');
+
+            try {
+                // Show loading state
+                exploreBtn.disabled = true;
+                loading.style.display = 'flex';
+                cityInfo.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                // Select random city
+                const randomCity = cities[Math.floor(Math.random() * cities.length)];
+                currentCity = randomCity;
+                
+                // Update map
+                if (currentMarker) {
+                    map.removeLayer(currentMarker);
+                }
+
+                currentMarker = L.marker([randomCity.lat, randomCity.lng])
+                    .addTo(map)
+                    .bindPopup(`<b>${randomCity.name}</b><br>${randomCity.country}`)
+                    .openPopup();
+
+                map.setView([randomCity.lat, randomCity.lng], 10);
+
+                // Update city header
+                document.getElementById('cityName').textContent = randomCity.name;
+                document.getElementById('countryName').textContent = `${randomCity.flag} ${randomCity.country}`;
+                document.getElementById('coordinates').textContent = 
+                    `${randomCity.lat.toFixed(4)}°, ${randomCity.lng.toFixed(4)}°`;
+
+                // Update stats
+                document.getElementById('timezone').textContent = randomCity.timezone;
+                document.getElementById('population').textContent = randomCity.population;
+                document.getElementById('elevation').textContent = randomCity.elevation;
+                document.getElementById('founded').textContent = randomCity.founded;
+
+                // Generate content with AI
+                const [aiFacts, travelSuggestions] = await Promise.all([
+                    generateCityFacts(randomCity.name, randomCity.country),
+                    generateTravelSuggestions(randomCity.name, randomCity.country)
+                ]);
+
+                // Use AI facts if available, fallback to predefined
+                const facts = aiFacts.length > 0 ? aiFacts : randomCity.facts;
+                currentCity.facts = facts; // Update current city with new facts
+
+                // Update facts
+                const factsContainer = document.getElementById('factsContainer');
+                factsContainer.innerHTML = facts.map(fact => 
+                    `<div class="fact-item">💡 ${fact}</div>`
+                ).join('');
+
+                // Update weather
+                const weather = generateWeatherData();
+                const weatherInfo = document.getElementById('weatherInfo');
+                weatherInfo.innerHTML = `
+                    <div class="weather-item">
+                        <h4>Temperature</h4>
+                        <p>${weather.temperature}°C</p>
+                    </div>
+                    <div class="weather-item">
+                        <h4>Condition</h4>
+                        <p>${weather.condition}</p>
+                    </div>
+                    <div class="weather-item">
+                        <h4>Humidity</h4>
+                        <p>${weather.humidity}%</p>
+                    </div>
+                    <div class="weather-item">
+                        <h4>Wind Speed</h4>
+                        <p>${weather.windSpeed} km/h</p>
+                    </div>
+                `;
+
+                // Update travel suggestions
+                const routeInfo = document.getElementById('routeInfo');
+                routeInfo.innerHTML = travelSuggestions.map(suggestion => 
+                    `<div class="route-item">✨ ${suggestion}</div>`
+                ).join('');
+
+                // Update prompts
+                updatePromptDisplay();
+
+                // Show city info with animation
+                setTimeout(() => {
+                    cityInfo.style.display = 'block';
+                    cityInfo.classList.add('pulse');
+                    setTimeout(() => cityInfo.classList.remove('pulse'), 1000);
+                }, 500);
+
+            } catch (error) {
+                console.error('Error exploring city:', error);
+                errorMessage.textContent = 'Oops! Failed to load city information. Please try again!';
+                errorMessage.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                exploreBtn.disabled = false;
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            
+            document.getElementById('exploreBtn').addEventListener('click', exploreRandomCity);
+            
+            // Add some initial flair
+            setTimeout(() => {
+                document.querySelector('.explore-btn').classList.add('pulse');
+                setTimeout(() => document.querySelector('.explore-btn').classList.remove('pulse'), 2000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
